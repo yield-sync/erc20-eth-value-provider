@@ -1,21 +1,23 @@
 {
-	"name": "@yield-sync/erc20-handler",
+	"name": "@yield-sync/erc20-eth-value-provider",
 	"version": "0.0.1",
 	"description": "",
 	"main": "scripts/deploy.js",
 	"scripts": {
 		"size-contracts": "npx hardhat size-contracts",
-		"deploy-to-base-sepolia": "npx hardhat run scripts/Deploy.ts --network base-sepolia",
-		"deploy-to-sepolia": "npx hardhat run scripts/Deploy.ts --network sepolia"
+		"deploy-to-base-sepolia": "npx hardhat run scripts/deploy.ts --network base-sepolia",
+		"deploy-to-sepolia": "npx hardhat run scripts/deploy.ts --network sepolia"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/yield-sync/v1-vaults.git"
+		"url": "git+https://github.com/yield-sync/erc20-eth-value-provider.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
+	},
+	"dependencies": {
 		"@chainlink/contracts": "^0.8.0",
 		"@eth-optimism/plugins": "^1.0.0-alpha.3",
 		"@nomicfoundation/hardhat-chai-matchers": "^1.0.5",
@@ -31,11 +33,9 @@
 		"dotenv": "^16.0.3",
 		"ethers": "^5.7.2",
 		"hardhat": "^2.12.6",
+		"hardhat-contract-sizer": "^2.10.0",
 		"soltypes": "^2.0.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5"
-	},
-	"dependencies": {
-		"hardhat-contract-sizer": "^2.10.0"
 	}
 }
