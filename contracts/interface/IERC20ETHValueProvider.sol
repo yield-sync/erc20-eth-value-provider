@@ -2,7 +2,7 @@
 pragma solidity ^0.8.18;
 
 
-interface IV1EMPETHValueProvider
+interface IERC20ETHValueProvider
 {
 	/**
 	* @notice Return the value of the ERC20 denominated in ETH

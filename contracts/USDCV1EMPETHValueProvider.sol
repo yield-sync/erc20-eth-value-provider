@@ -4,11 +4,11 @@ pragma solidity ^0.8.18;
 
 import { AggregatorV3Interface } from "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 
-import { IV1EMPETHValueProvider } from "./interface/IV1EMPETHValueProvider.sol";
+import { IERC20ETHValueProvider } from "./interface/IERC20ETHValueProvider.sol";
 
 
 contract USDCV1EMPETHValueProvider is
-	IV1EMPETHValueProvider
+	IERC20ETHValueProvider
 {
 	AggregatorV3Interface internal _ethUsdPriceFeed;
 	AggregatorV3Interface internal _usdcUsdPriceFeed;
@@ -21,7 +21,7 @@ contract USDCV1EMPETHValueProvider is
 	}
 
 
-	/// @inheritdoc IV1EMPETHValueProvider
+	/// @inheritdoc IERC20ETHValueProvider
 	function utilizedERC20ETHValue()
 		public
 		view
@@ -48,7 +48,7 @@ contract USDCV1EMPETHValueProvider is
 		return (normalizedUsdcUsdPrice * 1e18) / normalizedEthUsdPrice;
 	}
 
-	/// @inheritdoc IV1EMPETHValueProvider
+	/// @inheritdoc IERC20ETHValueProvider
 	function eRC20Decimals()
 		public
 		view
