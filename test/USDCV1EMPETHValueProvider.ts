@@ -7,8 +7,8 @@ describe("USDCV1EMPETHValueProvider", function () {
 	const ETH_USD_PRICE = ethers.utils.parseUnits("1800", 8);
 	const USDC_USD_PRICE = ethers.utils.parseUnits("1", 8);
 
-	let ethUsdPriceFeed: Contract;
-	let usdcUsdPriceFeed: Contract;
+	let eTHUSDAggregatorV3Interface: Contract;
+	let uSDUSDAggregatorV3Interface: Contract;
 	let valueProvider: Contract;
 	let deployer: Signer;
 
@@ -18,15 +18,15 @@ describe("USDCV1EMPETHValueProvider", function () {
 
 		const MockAggregator = await ethers.getContractFactory("MockV3Aggregator");
 
-		ethUsdPriceFeed = await MockAggregator.deploy(8, ETH_USD_PRICE);
-		usdcUsdPriceFeed = await MockAggregator.deploy(8, USDC_USD_PRICE);
+		eTHUSDAggregatorV3Interface = await MockAggregator.deploy(8, ETH_USD_PRICE);
+		uSDUSDAggregatorV3Interface = await MockAggregator.deploy(8, USDC_USD_PRICE);
 
-		await ethUsdPriceFeed.deployed();
-		await usdcUsdPriceFeed.deployed();
+		await eTHUSDAggregatorV3Interface.deployed();
+		await uSDUSDAggregatorV3Interface.deployed();
 
 		const ValueProvider = await ethers.getContractFactory("USDCV1EMPETHValueProvider");
 
-		valueProvider = await ValueProvider.deploy(ethUsdPriceFeed.address, usdcUsdPriceFeed.address);
+		valueProvider = await ValueProvider.deploy(eTHUSDAggregatorV3Interface.address, uSDUSDAggregatorV3Interface.address);
 
 		await valueProvider.deployed();
 	});
@@ -34,23 +34,23 @@ describe("USDCV1EMPETHValueProvider", function () {
 
 	describe("function utilizedERC20ETHValue()", function () {
 		describe("Expected Failure", function () {
-			it("should revert if ETH/USD price is zero", async () => {
+			it("Should revert if USDC/ETH price is zero..", async () => {
 				// Set ETH/USD price to zero
-				await ethUsdPriceFeed.updateAnswer(0);
+				await eTHUSDAggregatorV3Interface.updateAnswer(0);
 
 				await expect(valueProvider.utilizedERC20ETHValue()).to.be.revertedWith("Invalid price");
 			});
 
-			it("should revert if USDC/USD price is zero", async () => {
+			it("Should revert if USDC/ETH price is zero..", async () => {
 				// Set USDC/USD price to zero
-				await usdcUsdPriceFeed.updateAnswer(0);
+				await uSDUSDAggregatorV3Interface.updateAnswer(0);
 
 				await expect(valueProvider.utilizedERC20ETHValue()).to.be.revertedWith("Invalid price");
 			});
 		});
 
 		describe("Expected Success", function () {
-			it("should return the correct ETH price in USDC", async () => {
+			it("should return the correct USDC/ETH..", async () => {
 				const usdcInEth = await valueProvider.utilizedERC20ETHValue();
 
 				const expectedUsdcInEth = USDC_USD_PRICE.mul(ethers.utils.parseUnits("1", 18)).div(ETH_USD_PRICE);

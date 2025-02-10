@@ -1,6 +1,6 @@
 {
 	"name": "@yield-sync/erc20-eth-value-provider",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "",
 	"main": "scripts/deploy.js",
 	"scripts": {

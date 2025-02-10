@@ -10,14 +10,14 @@ import { IERC20ETHValueProvider } from "./interface/IERC20ETHValueProvider.sol";
 contract USDCV1EMPETHValueProvider is
 	IERC20ETHValueProvider
 {
-	AggregatorV3Interface internal _ethUsdPriceFeed;
-	AggregatorV3Interface internal _usdcUsdPriceFeed;
+	AggregatorV3Interface internal _eTHUSDAggregatorV3Interface;
+	AggregatorV3Interface internal _uSDUSDAggregatorV3Interface;
 
 
-	constructor (address __ethUsdPriceFeed, address __usdcUsdPriceFeed)
+	constructor (address __eTHUSDAggregatorV3Interface, address __uSDUSDAggregatorV3Interface)
 	{
-		_ethUsdPriceFeed = AggregatorV3Interface(__ethUsdPriceFeed);
-		_usdcUsdPriceFeed = AggregatorV3Interface(__usdcUsdPriceFeed);
+		_eTHUSDAggregatorV3Interface = AggregatorV3Interface(__eTHUSDAggregatorV3Interface);
+		_uSDUSDAggregatorV3Interface = AggregatorV3Interface(__uSDUSDAggregatorV3Interface);
 	}
 
 
@@ -29,13 +29,13 @@ contract USDCV1EMPETHValueProvider is
 		returns (uint256)
 	{
 		// Get the latest ETH/USD price
-		(, int256 ethUsdPrice, , , ) = _ethUsdPriceFeed.latestRoundData();
+		(, int256 ethUsdPrice, , , ) = _eTHUSDAggregatorV3Interface.latestRoundData();
 
 		// Get the latest USDC/USD price
-		(, int256 usdcUsdPrice, , , ) = _usdcUsdPriceFeed.latestRoundData();
+		(, int256 usdcUsdPrice, , , ) = _uSDUSDAggregatorV3Interface.latestRoundData();
 
-		uint8 ethDecimals = _ethUsdPriceFeed.decimals();
-		uint8 usdcDecimals = _usdcUsdPriceFeed.decimals();
+		uint8 ethDecimals = _eTHUSDAggregatorV3Interface.decimals();
+		uint8 usdcDecimals = _uSDUSDAggregatorV3Interface.decimals();
 
 		// Ensure prices are positive
 		require(ethUsdPrice > 0 && usdcUsdPrice > 0, "Invalid price");
@@ -55,6 +55,6 @@ contract USDCV1EMPETHValueProvider is
 		override
 		returns (uint8)
 	{
-		return _usdcUsdPriceFeed.decimals();
+		return _uSDUSDAggregatorV3Interface.decimals();
 	}
 }
